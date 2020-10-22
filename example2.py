@@ -32,7 +32,52 @@ A useful function is the "info" method to help gather information about
 your screen
 
 """
-
+#p.mouseInfo()
 import pyautogui as p 
+import time 
 
-p.mouseInfo()
+
+#locations of upgrades
+burrow=(1320,495)
+hoard=(1320,555)
+dam=(1320,615)
+pen=(1600,495)
+farm=(1600,555)
+puddles=(1600,615) 
+upgrade_list=[burrow,hoard,dam,pen,farm,puddles]
+index=0
+
+#function that cycles through the upgrades
+def click():
+    global index
+    p.click(upgrade_list[index])
+    index = index + 1
+    
+    if index>5:
+        index=0 
+
+#locations f resources/resouce gathering buttons 
+shrimp=(1300,330)
+twigs=(1500,320)
+pebbles=(1300,380)
+resource_button=[shrimp,twigs,pebbles]
+resource_list=[(1000,330),(1000,360),(1000,390)]
+index1=0
+
+#block cycles through the resources until all bars are full
+#full resource bar=(0,125,0)
+def resources():
+    global index1
+    x,y = resource_list[index1]
+    p.click(resource_button[index1])
+    if p.pixelMatchesColor(x,y,(0,125,0)):
+        index1= index1 + 1
+        
+        if index1>2:
+            index1=0
+            print("Pausing for 3 seconds...",end="")
+            print("Checking for updates")
+            time.sleep(3)
+            click()
+while True:
+    resources()
